@@ -1,0 +1,57 @@
+body {
+    font-family: 'Heebo', sans-serif;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+/* .column {
+    float: left;
+    width: 10%;
+    padding: 100px;
+  } */
+ 
+  /* Clear floats after image containers */
+.row::after {
+content: "";
+clear: both;
+display: table;
+}
+* {
+    box-sizing:border-box;
+    
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table
+ 
+}
+
+
+#company_details
+{
+    background-color: rgba(0,0,0,0.5);
+    width: 15em;
+    position: absolute;
+    right: 5em;
+}
+
+.tick
+{
+    display: none
+}
+    
+.axis path
+{
+    fill: none;
+}
+
+.icon {
+    width:50px;
+    float:left;
+}
