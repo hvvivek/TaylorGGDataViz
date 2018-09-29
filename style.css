@@ -35,10 +35,33 @@ display: table;
 
 #company_details
 {
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(200,200,200,0.5);
     width: 15em;
     position: absolute;
-    right: 5em;
+    right: 50vw;
+    padding: 1em;
+    margin-top: 5em;
+    border-radius: 5px;
+}
+
+#company_details p
+{
+    /* background-color: rgba(0,0,0,0.5);
+    width: 25em;
+    position: absolute;
+    right: 15em; */
+    font-size: 0.8em;
+    margin-bottom: 0.2em;
+}
+
+#company_details h4
+{
+    height: 2.5em;
+    font-size: 1em;
+    /* background-color: rgba(0,0,0,0.5);
+    width: 25em;
+    position: absolute;
+    right: 15em; */
 }
 
 .tick
@@ -54,4 +77,9 @@ display: table;
 .icon {
     width:50px;
     float:left;
+}
+
+text
+{
+    font-size: 0.7em;
 }
