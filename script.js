@@ -22,9 +22,10 @@ var yAxis = d3.svg.axis()
     .orient("left")
     .tickFormat(d3.format(".2s"));
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#plot").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
+    .attr("id", "canvas")
   .append("g")
     .attr("transform", "translate(" + (-20 + margin.left) + "," + margin.top + ")");
 
@@ -89,9 +90,9 @@ d3.csv("topcompanies_trimmed.csv", function(error, data) {
         })
       .attr("height", function(d) { return y(d.y0) - y(d.y1); })
       .attr("class", function(d) {
-        console.log(d)
+        // console.log(d)
         classLabel = d.name.replace(/\s/g, ''); //remove spaces
-        return "class" + classLabel + " " + d.industry.replace(/\s/g, '') + " industry";
+        return "class" + classLabel + " " + d.industry.replace(/\s/g, '') + " industry active";
       })
       .style("fill", function(d) { return color(d.name); });
 
@@ -103,14 +104,16 @@ d3.csv("topcompanies_trimmed.csv", function(error, data) {
           var yPos = parseFloat(d3.select(this).attr("y"));
           var height = parseFloat(d3.select(this).attr("height"))
 
+          d3.select("#company_details").style("opacity", 1)
           d3.select(this).attr("stroke","blue").attr("stroke-width",0.8);
           d3.select("#company_details h4").text(d.mystate)
           var company_name = d.mystate
           var company_data = data_backup.filter(function(d){return d.companies == company_name})[0]
-          d3.select("#company_details p:nth-of-type(1)").text("Representation: " + company_data.Representation)
-          d3.select("#company_details p:nth-of-type(2)").text("Maternity " + company_data.Maternal)
-          d3.select("#company_details p:nth-of-type(3)").text("Support: " + company_data.Support)
-          d3.select("#company_details p:nth-of-type(4)").text("Advancement: " + company_data.Advancement)
+          d3.select("#company_details p:nth-of-type(1)").text("Rank: " + (data_backup.indexOf(company_data) + 1))
+          d3.select("#company_details p:nth-of-type(2)").text("Representation: " + company_data.Representation)
+          d3.select("#company_details p:nth-of-type(3)").text("Maternity " + company_data.Maternal)
+          d3.select("#company_details p:nth-of-type(4)").text("Support: " + company_data.Support)
+          d3.select("#company_details p:nth-of-type(5)").text("Advancement: " + company_data.Advancement)
           
         //   d3.select("#company_details h4").text(d.mystate)
         //   d3.select("#company_details h4").text(d.mystate)
@@ -143,10 +146,10 @@ d3.csv("topcompanies_trimmed.csv", function(error, data) {
     .enter().append("g")
       //.attr("class", "legend")
       .attr("class", function (d) {
-        legendClassArray.push(d.replace(/\s/g, '')); //remove spaces
+        // legendClassArray.push(d.replace(/\s/g, '')); //remove spaces
         return "industry_legend";
       })
-      .attr("transform", function(d, i) { return "translate(0," + (100 + i * 20) + ")"; });
+      .attr("transform", function(d, i) { return "translate(0," + (50+ i * 20) + ")"; });
 
   var legend = svg.selectAll(".legend")
       .data(color.domain().slice().reverse())
@@ -156,13 +159,13 @@ d3.csv("topcompanies_trimmed.csv", function(error, data) {
         legendClassArray.push(d.replace(/\s/g, '')); //remove spaces
         return "legend";
       })
-      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+      .attr("transform", function(d, i) { return "translate(-300," + (50 + i * 20) + ")"; });
 
   //reverse order to match order in which bars are stacked    
   legendClassArray = legendClassArray.reverse();
 
   industry_legend.append("circle")
-      .attr("cx", width - 9)
+      .attr("cx", width - 220)
       .attr("cy", 8)
       .attr("r", 8)
       // .attr("height", 18)
@@ -183,6 +186,7 @@ d3.csv("topcompanies_trimmed.csv", function(error, data) {
       })
       .on("click", function(d)
       {
+        // console.log(active_link)
         if(d3.select(this).attr("active") != "true")
         {
           d3.select(this)
@@ -205,6 +209,14 @@ d3.csv("topcompanies_trimmed.csv", function(error, data) {
 
   function plotIndustry(d)
   {
+    var delay = 0
+
+    if(active_link != '0')
+    {
+      // restore()
+      delay = 1000;
+    }
+
     industries_to_show.push(d.id.split("id").pop())
     
     for(var i=0; i<industries.length; i++)
@@ -212,71 +224,162 @@ d3.csv("topcompanies_trimmed.csv", function(error, data) {
       if(!industries_to_show.contains(industries[i].replace(/\s/g, '')))
       {
         // console.log(industries[i].replace(/\s/g, '') + " " + industry_to_show)
-        d3.selectAll("." + industries[i].replace(/\s/g, ''))
-        .transition()
-        .duration(1000)          
-        .style("opacity", 0);
+        if(active_link != 0)
+        {
+          d3.selectAll("." + industries[i].replace(/\s/g, ''))
+          .classed("active", false)
+          .filter(".class" + active_link)
+          .transition()
+          .duration(1000)    
+          // .delay(delay)                
+          .style("opacity", 0)
+        }
+        else
+        {
+          d3.selectAll("." + industries[i].replace(/\s/g, ''))
+          .classed("active", false)
+          .transition()
+          .duration(1000)    
+          .delay(delay)                
+          .style("opacity", 0)
+        }
+
       }
       else
       {
-        d3.selectAll("." + industries[i].replace(/\s/g, ''))
-        .transition()
-        .duration(1000)          
-        .style("opacity", 1);
+        if(active_link != 0)
+        {
+          d3.selectAll("." + industries[i].replace(/\s/g, ''))
+          .classed("active", true)
+          .filter(".class" + active_link)
+          .transition()
+          .duration(1000)  
+          // .delay(delay)                  
+          .style("opacity", 1)
+        }
+        else
+        {
+          d3.selectAll("." + industries[i].replace(/\s/g, ''))
+          .classed("active", true)
+          .transition()
+          .duration(1000)  
+          .delay(delay)                  
+          .style("opacity", 1) 
+        }
+
       }
     }
   }
 
   function removeIndustry(d)
   {
+    var delay = 0
+    if(active_link != '0')
+    {
+      // restore()
+      delay = 1000;
+    }
+
     industries_to_show.pop(d.id.split("id").pop())
     if(industries_to_show.length != 0)
     {
       for(var i=0; i<industries.length; i++)
+    {
+      if(!industries_to_show.contains(industries[i].replace(/\s/g, '')))
       {
-        if(!industries_to_show.contains(industries[i].replace(/\s/g, '')))
+        // console.log(industries[i].replace(/\s/g, '') + " " + industry_to_show)
+        if(active_link != 0)
         {
-          // console.log(industries[i].replace(/\s/g, '') + " " + industry_to_show)
           d3.selectAll("." + industries[i].replace(/\s/g, ''))
+          .classed("active", false)
+          .filter(".class" + active_link)
           .transition()
-          .duration(1000)          
-          .style("opacity", 0);
+          .duration(1000)    
+          // .delay(delay)                
+          .style("opacity", 0)
         }
         else
         {
           d3.selectAll("." + industries[i].replace(/\s/g, ''))
+          .classed("active", false)
           .transition()
-          .duration(1000)          
-          .style("opacity", 1);
+          .duration(1000)    
+          .delay(delay)                
+          .style("opacity", 0)
         }
+
       }
+      else
+      {
+        if(active_link != 0)
+        {
+          d3.selectAll("." + industries[i].replace(/\s/g, ''))
+          .classed("active", true)
+          .filter(".class" + active_link)
+          .transition()
+          .duration(1000)  
+          // .delay(delay)                  
+          .style("opacity", 1)
+        }
+        else
+        {
+          d3.selectAll("." + industries[i].replace(/\s/g, ''))
+          .classed("active", true)
+          .transition()
+          .duration(1000)  
+          .delay(delay)                  
+          .style("opacity", 1) 
+        }
+
+      }
+    }
     }
     else
     {
-      d3.selectAll(".industry")
+      if(active_link != "0")
+      {
+        d3.selectAll(".industry")
+          .classed("active", true)
+          .filter(".class"+active_link)
           .transition()
-          .duration(1000)          
-          .style("opacity", 1);
+          .duration(1000)  
+          // .delay(delay)                  
+          .style("opacity", 1) 
+      }
+      else
+      {
+      d3.selectAll(".industry")
+          .classed("active", true)
+          .transition()
+          .duration(1000)
+          // .delay(1000)                    
+          .style("opacity", 1)
+      }
     } 
-    
-    // d3.selectAll(".industry")
-    // .transition()
-    // .duration(1000)          
-    // .style("opacity", 0);
-
-    // d3.selectAll(industry_to_show)
-    // .transition()
-    // .duration(1000) 
-    // .delay()         
-    // .style("opacity", 1);
-    
-
-      // d3.select("")
   }
 
+  function restore()
+  {
+    d3.select("#id" + active_link)           
+              .style("stroke", "none");
+    
+    //restore remaining boxes to normal opacity
+    for (i = 0; i < legendClassArray.length; i++) {              
+      d3.select("#id" + legendClassArray[i])
+        .style("opacity", 1);
+    }
+    idx = legendClassArray.indexOf(active_link);    
+
+    //restore plot to original
+    restorePlot(active_link);
+
+    active_link = "0"; //reset
+
+    
+  }
 
   legend.append("circle")
-      .attr("cx", width - 9)
+      .attr("cx", width - 120)
       .attr("cy", 8)
       .attr("r", 8)
       // .attr("height", 18)
@@ -324,6 +427,7 @@ d3.csv("topcompanies_trimmed.csv", function(error, data) {
                   .style("opacity", 1);
             }
 
+            console.log(d)
             //restore plot to original
             restorePlot(d);
 
@@ -335,24 +439,26 @@ d3.csv("topcompanies_trimmed.csv", function(error, data) {
       });
 
   legend.append("text")
-      .attr("x", width - 24)
+      .attr("x", width - 100)
       .attr("y", 9)
       .attr("dy", ".35em")
-      .style("text-anchor", "end")
+      .style("text-anchor", "start")
       .text(function(d) { return d; });
 
   industry_legend.append("text")
-      .attr("x", width - 24)
+      .attr("x", width - 200)
       .attr("y", 9)
       .attr("dy", ".35em")
-      .style("text-anchor", "end")
+      .style("text-anchor", "start")
       .text(function(d) { return d; });
 
   function restorePlot(d) {
 
+    // console.log(idx)
     state.selectAll("rect").forEach(function (d, i) {      
       //restore shifted bars to original posn
       d3.select(d[idx])
+        // .filter(".active")
         .transition()
         .duration(1000)        
         .attr("y", y_orig[i]);
@@ -362,9 +468,10 @@ d3.csv("topcompanies_trimmed.csv", function(error, data) {
     for (i = 0; i < legendClassArray.length; i++) {
       if (legendClassArray[i] != class_keep) {
         d3.selectAll(".class" + legendClassArray[i])
+          .filter(".active")
           .transition()
           .duration(1000)
-          .delay(750)
+          .delay(1000)
           .style("opacity", 1);
       }
     }
@@ -372,11 +479,11 @@ d3.csv("topcompanies_trimmed.csv", function(error, data) {
   }
 
   function plotSingle(d) {
-      console.log(d)
         
     class_keep = d.id.split("id").pop();
     idx = legendClassArray.indexOf(class_keep);    
-   
+    // console.log(class_keep)
+
     //erase all but selected bars by setting opacity to 0
     for (i = 0; i < legendClassArray.length; i++) {
       if (legendClassArray[i] != class_keep) {

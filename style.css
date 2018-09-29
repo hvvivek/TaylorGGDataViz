@@ -40,8 +40,9 @@ display: table;
     position: absolute;
     right: 50vw;
     padding: 1em;
-    margin-top: 5em;
+    margin-top: 50px;
     border-radius: 5px;
+    opacity: 0;
 }
 
 #company_details p
@@ -82,4 +83,69 @@ display: table;
 text
 {
     font-size: 0.7em;
+}
+
+.invisible
+{
+    opacity: 0;
+}
+
+h1
+{
+    font-weight: bolder;
+    font-size: 3em;
+}
+
+h2
+{
+    /* font-weight: bolder; */
+    font-style: italic;
+    font-size: 1em;
+}
+
+h3
+{
+    font-weight: bolder;
+    /* font-style: italic; */
+    font-size: 1.5em;
+}
+
+#info-slide
+{
+    height: 100vh;
+}
+
+#plot
+{
+    position: relative;
+}
+
+.info-box
+{
+    height: 10em;
+}
+.info-box img
+{
+    /* height: 100%; */
+    width: 3em;
+}
+
+h4
+{
+    font-size: 1em;
+    color: grey;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+.info-box p
+{
+    font-size: 0.6em;
+    color: grey;
+    margin-bottom: 0em;
+}
+
+.info-box .col-9
+{
+    padding: 0px;
 }

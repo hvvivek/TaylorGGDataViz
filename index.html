@@ -15,48 +15,94 @@
     <body>
         <!-- Bootstrap classes are named using the format {property}{sides}-{size} for xs and {property}{sides}-{breakpoint}-{size} for sm, md, lg, and xl. -->
         
-    <div class="container">
-        <div class="header mt-3 text-center">
-            <h1>Expect(ing)</h1>
-            <h2>Working Mother's Top Rated Companies for Women Ranked Best to Worst</h2>
-            <h3>How does better company paid maternity leave reflect female representation in those companies?</h3>
+    <div class="container-fluid" id="info-slide">
+        <div id="info-slide">
+                <div class="header mt-3 text-left">
+                    <h1>Expect(ing)</h1>
+                    <h2>Working Mother's Top Rated Companies for Women Ranked Best to Worst</h2>
+                    <h3>How does better company paid maternity leave reflect female representation in those companies?</h3>
+                </div>
+        
+                <div class="info text-left mt-3">
+                    <p class="font-sm">Best Companies application includes more than 400 questions on leave policies, workforce representation, benefits, childcare, advancement programs, flexibility policies and more. It surveys the availability and usage of these programs, as well as the accountability of the many managers who oversee them. Company profiles and data come from submitted applications and reflect 2016 data.</P>
+        
+                    <div class="row">
+                        <div class="col row info-box">
+                            <div class="col-3">
+                                <img src="arrow.png" alt="Advancement">
+                            </div>
+                            <div class="col-9">
+                                    <h4>
+                                        Advancement Score
+                                    </h4>
+                                    <p class="font-xs">Average of: </p>
+                                    <p>% of females participating in career counseling,</p>
+                                    <p>% participating in management/leadership training</p>
+                                    <p>% participating in mentoring</p>
+                            </div>
+
+                        </div>
+
+                        <div class="col row info-box">
+                                <div class="col-3">
+                                        <img src="hnad.png" alt="Support" class="icon">
+                                    </div>
+                                <div class="col-9">
+                                        <h4>
+                                                Support Score
+                                        </h4>
+                                        <p class="font-xs">Average of if company offers childcare and if company subsidizes backup eldercare.</p>
+                                </div>
+    
+                        </div>
+
+                        <div class="col row info-box">
+                                <div class="col-3">
+                                        <img src="pregnant.png" alt="Support" class="icon">
+                                    </div>
+                                <div class="col-9">
+                                        <h4>
+                                                Maternal Score
+                                        </h4>
+                                        <p class="font-xs">How much paid maternity leave is given compared to best company's policy of 26 weeks.</p>
+                                </div>
+    
+                        </div>
+
+                        <div class="col row info-box">
+                                <div class="col-3">
+                                        <img src="representation.png" alt="Support" class="icon">
+                                    </div>
+                                <div class="col-9">
+                                        <h4>
+                                                Representation Score
+                                        </h4>
+                                        <p class="font-xs">Average of % of employees who are women, % of managers/executives who are women, and new hires who are women.</p>
+                                </div>
+    
+                        </div>
+
+                    </div>
+                </div>
+                <div class="footer font-xs">
+                        <strong>Source</strong>"Working Mother's 2017 Best Companies"
+                </div>
         </div>
+        
+        
+        
 
-        <div class="info text-left mt-3">
-            <p class="font-sm">Best Companies application includes more than 400 questions on leave policies, workforce representation, benefits, childcare, advancement programs, flexibility policies and more. It surveys the availability and usage of these programs, as well as the accountability of the many managers who oversee them. Company profiles and data come from submitted applications and reflect 2016 data.</P>
-
-            <div class="row">
-                <div class="col">
-                        <img src="arrow.png" alt="Advancement" class="icon">
-                        <p class="font-xs">Advancement Score: Average of percentage of female employees who participate in career counseling, percent participating in management/leadership training, and percent of how many participate in mentoring</p>
-                    </div>
-                <div class="col">
-                        <img src="hnad.png" alt="Support" class="icon">
-                        <p class="font-xs">Support Score: Average of if company offers childcare and if company subsidizes backup eldercare.</p>
-                    </div>
-                <div class="col">
-                        <img src="pregnant.png" alt="Maternal" class="icon">
-                        <p class="font-xs">Maternal Score: How much paid maternity leave is given compared to best company's policy of 26 weeks.</p>
-
-                    </div>
-                <div class="col">
-                        <img src="representation.png" alt="Representation" class="icon">
-                        <p class="font-xs">Representation Score: Average of % of employees who are women, % of managers/executives who are women, and new hires who are women.</p>
-                    </div>
+        <div id="plot">
+            <div id="company_details" class="font-md">
+                <h4>Company Name</h4>
+                <p>Rank: </p>
+                <p>Value 1: </p>
+                <p>Value 2: </p>
+                <p>Value 3: </p>
+                <p>Value 4: </p>
             </div>
         </div>
         
-        <div class="footer font-xs">
-            <strong>Source</strong>"Working Mother's 2017 Best Companies"
-        </div>
-
-        <div id="company_details" class="font-md">
-            <h4>Company Name</h4>
-            <p>Value 1: </p>
-            <p>Value 2: </p>
-            <p>Value 3: </p>
-            <p>Value 4: </p>
-        </div>
     </div>
     
 
